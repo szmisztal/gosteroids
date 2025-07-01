@@ -60,7 +60,5 @@ func _integrate_forces(physics_state):
 	new_transform.origin.y = wrapf(new_transform.origin.y, 0, screensize.y)
 	physics_state.transform = new_transform
 	
-
-
 func _on_gun_cooldown_timeout():
 	can_shoot = true
