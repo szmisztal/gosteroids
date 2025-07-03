@@ -1,5 +1,11 @@
 extends RigidBody2D
 
+signal lives_changed
+signal dead
+
+var reset_pos = false
+var lives = 0: set = set_lives
+
 enum {INIT, ALIVE, INVULNERABLE, DEAD}
 var state = INIT
 
@@ -12,6 +18,20 @@ var can_shoot = true
 var thrust = Vector2.ZERO
 var rotation_dir = 0
 var screensize = Vector2.ZERO
+
+func set_lives(value):
+	lives = value
+	lives_changed.emit(lives)
+	if lives <= 0:
+		change_state(DEAD)
+	else:
+		change_state(INVULNERABLE)
+		
+func reset():
+	reset_pos = true
+	$Sprite2D.show()
+	lives = 3
+	change_state(ALIVE)
 
 func change_state(new_state):
 	match new_state:
@@ -59,6 +79,10 @@ func _integrate_forces(physics_state):
 	new_transform.origin.x = wrapf(new_transform.origin.x, 0, screensize.x)
 	new_transform.origin.y = wrapf(new_transform.origin.y, 0, screensize.y)
 	physics_state.transform = new_transform
+	
+	if reset_pos:
+		physics_state.transform.origin = screensize / 2
+		reset_pos = false
 	
 func _on_gun_cooldown_timeout():
 	can_shoot = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwbl8eco0b2ra"]
+[gd_scene load_steps=7 format=3 uid="uid://bwbl8eco0b2ra"]
 
 [ext_resource type="Script" uid="uid://cwt2fgwch7kuj" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://c10gh5e7vvuu" path="res://assets/darkPurple_background.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://cqkva7r36g35b" path="res://rock/rock.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bpuqirrvyvrna" path="res://player/player.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://y4w64dbm1qkh" path="res://misc/hud.tscn" id="5_lquwl"]
 
 [sub_resource type="Curve2D" id="Curve2D_ig7tw"]
 _data = {
@@ -32,3 +33,8 @@ curve = SubResource("Curve2D_ig7tw")
 position = Vector2(24, 32)
 
 [node name="Player" parent="." instance=ExtResource("4_7mycd")]
+
+[node name="HUD" parent="." instance=ExtResource("5_lquwl")]
+
+[connection signal="lives_changed" from="Player" to="HUD" method="update_lives"]
+[connection signal="start_game" from="HUD" to="." method="_on_hud_start_game"]
