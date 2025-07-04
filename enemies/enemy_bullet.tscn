@@ -1,18 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3rw12k3s5sr2"]
+[gd_scene load_steps=4 format=3 uid="uid://dx7rkjj0uppsy"]
 
-[ext_resource type="Script" uid="uid://c63t5a6ubps13" path="res://bullet/bullet.gd" id="1_6wip1"]
-[ext_resource type="Texture2D" uid="uid://d1tuhcg0ll6fu" path="res://assets/laser.png" id="2_0qjqd"]
+[ext_resource type="Script" uid="uid://d2gchrqovc454" path="res://enemies/enemy_bullet.gd" id="1_qadii"]
+[ext_resource type="Texture2D" uid="uid://coyciix5x48og" path="res://assets/laser_green.png" id="2_qadii"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvnxm"]
 size = Vector2(44, 6)
 
-[node name="Bullet" type="Area2D" groups=["bullet"]]
-script = ExtResource("1_6wip1")
+[node name="EnemyBullet" type="Area2D" groups=["bullet"]]
+script = ExtResource("1_qadii")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("2_0qjqd")
+texture = ExtResource("2_qadii")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xvnxm")
@@ -21,6 +21,5 @@ shape = SubResource("RectangleShape2D_xvnxm")
 position = Vector2(5.36442e-07, 2.38419e-07)
 scale = Vector2(2.2, 0.4)
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
