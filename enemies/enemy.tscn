@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://j6sna8dmkf21"]
+[gd_scene load_steps=16 format=3 uid="uid://j6sna8dmkf21"]
 
 [ext_resource type="Script" uid="uid://cx6jj4754ww2o" path="res://enemies/enemy.gd" id="1_a6vjd"]
 [ext_resource type="Texture2D" uid="uid://d2v4vhidlcfoc" path="res://assets/enemy_saucer.png" id="1_orwns"]
 [ext_resource type="PackedScene" uid="uid://dx7rkjj0uppsy" path="res://enemies/enemy_bullet.tscn" id="2_07tka"]
 [ext_resource type="PackedScene" uid="uid://cx27rctbwgwqm" path="res://misc/explosion.tscn" id="2_a6vjd"]
 [ext_resource type="PackedScene" uid="uid://d2mnf6r4xvfvt" path="res://enemies/enemy_paths.tscn" id="3_07tka"]
+[ext_resource type="AudioStream" uid="uid://b3xnnlm7cw7ck" path="res://assets/sounds/enemy_laser.wav" id="6_epsnb"]
+[ext_resource type="AudioStream" uid="uid://87jesysfg7xu" path="res://assets/sounds/explosion.wav" id="7_4w5fm"]
+[ext_resource type="Texture2D" uid="uid://drobf43e2h8wc" path="res://assets/corona.png" id="8_4w5fm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orwns"]
 radius = 32.0
@@ -47,6 +50,17 @@ _data = {
 &"flash": SubResource("Animation_07tka")
 }
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uba7a"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_28xqf"]
+_data = [Vector2(0, 0.831461), 0.0, 0.0, 0, 0, Vector2(0.52514, 0.41573), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_g67el"]
+offsets = PackedFloat32Array(0, 0.947712, 1)
+colors = PackedColorArray(1, 0.621042, 0.563658, 1, 1, 0.524573, 0.471198, 1, 1, 1, 1, 1)
+
 [node name="Enemy" type="Area2D" groups=["enemies"]]
 script = ExtResource("1_a6vjd")
 bullet_scene = ExtResource("2_07tka")
@@ -75,6 +89,28 @@ scale = Vector2(0.5, 0.5)
 [node name="GunCooldown" type="Timer" parent="."]
 wait_time = 1.5
 autostart = true
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_epsnb")
+volume_db = -8.0
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_4w5fm")
+volume_db = -8.0
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_uba7a")
+amount = 20
+texture = ExtResource("8_4w5fm")
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 45.0
+gravity = Vector2(0, 0)
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_28xqf")
+color_ramp = SubResource("Gradient_g67el")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

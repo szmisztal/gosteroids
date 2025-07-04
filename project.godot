@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Gosteroids"
-run/main_scene="uid://caj8cn0ox2clr"
+run/main_scene="uid://bwbl8eco0b2ra"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 

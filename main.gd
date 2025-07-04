@@ -17,6 +17,7 @@ func new_game():
 	$Player.reset()
 	await $HUD/Timer.timeout
 	playing = true
+	$Music.play()
 	
 func new_level():
 	level += 1
@@ -24,6 +25,7 @@ func new_level():
 	for i in level:
 		spawn_rock(4)
 	$EnemyTimer.start(randf_range(5, 10))
+	$LevelUpSound.play()
 	
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
@@ -48,6 +50,7 @@ func _on_rock_exploded(size, radius, pos, vel):
 		var newpos = pos + dir * radius
 		var newvel = dir * vel.length() * 1.1
 		spawn_rock(size - 1, newpos, newvel)
+	$ExplosionSound.play()
 		
 func _process(delta: float) -> void:
 	if not playing:
@@ -61,6 +64,7 @@ func _on_hud_start_game() -> void:
 func game_over():
 	playing = false
 	$HUD.game_over()
+	$Music.stop()
 	
 func _input(event):
 	if event.is_action_pressed("pause"):
