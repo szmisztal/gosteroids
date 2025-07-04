@@ -53,3 +53,10 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("rocks") or area.is_in_group("bullet"):
 		return
 	explode()
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("rocks") or body.is_in_group("bullet"):
+		return
+	body.shield -= 50
+	explode()
